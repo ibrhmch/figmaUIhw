@@ -13,8 +13,8 @@ struct ContentView: View {
             SearchBar()
 
             ScrollView {
-                PostCardView(name: "Ibrahim", date: "October 19, 2023")
-                PostCardView(name: "Mohammad", date: "October 18, 2022")
+                PostCardView(name: "Ibrahim", date: "October 19, 2023", postId: "1")
+                PostCardView(name: "Mohammad", date: "October 18, 2022", postId: "2")
             }
 
             Spacer()

@@ -10,9 +10,11 @@ import SwiftUI
 struct PostCardView: View {
     var name: String
     var date: String
+    var postId: String
     
     @State private var isExpanded = false
     @State private var selectedText: String?
+    @State private var likeStatus: Bool = false
     
     var body: some View {
         VStack {
@@ -51,7 +53,15 @@ struct PostCardView: View {
                             .font(.system(size: 10))
                     }
                     Spacer()
-                    Image(systemName: "heart")
+                    
+                    Button(action: {
+                        UserDefaults.standard.set(!likeStatus, forKey: "likeStatus\(postId)")
+                        likeStatus = UserDefaults.standard.bool(forKey: "likeStatus\(postId)")
+                    }) {
+                        Image(systemName: "heart")
+                            .foregroundStyle(likeStatus ? Color.red : Color.black)
+                    }
+                    
                     Image(systemName: "pencil")
                     Image(systemName: "ellipsis.bubble")
                         .padding(.leading)
@@ -72,7 +82,10 @@ struct PostCardView: View {
             )
             .cornerRadius(20)
             .padding()
-            .onTapGesture {  
+            .onAppear{
+                likeStatus = UserDefaults.standard.bool(forKey: "likeStatus\(postId)")
+            }
+            .onTapGesture {
                 withAnimation {
                     isExpanded.toggle()
                 }
@@ -89,5 +102,5 @@ struct PostCardView: View {
 }
 
 #Preview {
-    PostCardView(name: "Ibrahim", date: "October 19, 2023-")
+    PostCardView(name: "Ibrahim", date: "October 19, 2023", postId: "1")
 }
